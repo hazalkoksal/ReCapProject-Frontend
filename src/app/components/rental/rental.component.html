@@ -11,11 +11,13 @@
             <th>Return Date</th>
         </tr>
     </thead>
-    <tr *ngFor="let rental of rentals">
-        <td>{{rental.rentalId}}</td>
-        <td>{{rental.carName}}</td>
-        <td>{{rental.customerName}}</td>
-        <td>{{rental.rentDate | date:'dd/MM/yyyy hh:mm'}}</td>
-        <td>{{rental.returnDate | date:'dd/MM/yyyy hh:mm'}}</td>
-    </tr>
+    <tbody>
+        <tr *ngFor="let rental of rentals">
+            <td>{{rental.rentalId}}</td>
+            <td>{{rental.carName}}</td>
+            <td>{{rental.customerName}}</td>
+            <td>{{rental.rentDate | date:'dd/MM/yyyy hh:mm'}}</td>
+            <td>{{rental.returnDate | date:'dd/MM/yyyy hh:mm'}}</td>
+        </tr>
+    </tbody>  
 </table>

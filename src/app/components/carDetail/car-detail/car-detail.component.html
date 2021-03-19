@@ -1,0 +1,33 @@
+<div class="row">
+    <div class="col-md-9">
+          <div id="carouselExampleControls" class="carousel slide carousel-dark" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div *ngFor="let carImage of carImages" [class]="getCurrentImageClass(carImage)">
+                 <img src="https://localhost:44334//{{carImage.carImagePath}}" class="d-block w-100" alt="https://localhost:44334//{{carImage.carImagePath}}">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"  data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"  data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+    </div>
+    <div class="col-md-3">
+        <ul class="list-group" *ngFor="let car of cars">
+            <li class="list-group-item list-group-item-dark"><b>{{car.carName}}</b></li>
+            <li class="list-group-item"><b>Brand:</b> {{car.brandName}}</li>
+            <li class="list-group-item"><b>Color:</b> {{car.colorName}}</li>
+            <li class="list-group-item"><b>Model Year:</b> {{car.modelYear}}</li>
+            <li class="list-group-item"><b>Daily Price:</b> {{car.dailyPrice}}</li>
+            <li class="list-group-item"><b>Description:</b> {{car.description}}</li>
+          </ul>
+    </div>
+    <div class="my-3">
+        <a class="btn btn-dark float-end" href="/cars" role="button">Back</a>
+    </div>
+</div>
+
