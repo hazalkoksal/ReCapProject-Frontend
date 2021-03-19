@@ -37,13 +37,13 @@ export class CarDetailComponent implements OnInit {
   })
 }
 
-getCurrentImageClass(image:CarImage){
-  if(image == this.carImages[0]){
-    return "carousel-item active"
-  } else {
-    return "carousel-item"
-  }
+  getCurrentImageClass(image:CarImage){
+    if(image == this.carImages[0]){
+      return "carousel-item active"
+    } 
+    else {
+      return "carousel-item"
+    }
 }
-
 
 }
