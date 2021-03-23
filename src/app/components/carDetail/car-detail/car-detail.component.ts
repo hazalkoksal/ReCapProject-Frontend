@@ -15,7 +15,6 @@ export class CarDetailComponent implements OnInit {
   cars:CarDTO[] = [];
   carImages:CarImage[] = [];
 
-
   constructor(private carService:CarService, private carImageService:CarImageService, private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {

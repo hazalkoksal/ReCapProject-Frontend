@@ -1,0 +1,17 @@
+<div class="mb-3">
+    <input type="text" [(ngModel)]="filterBrandText" class="form-control" id="filterBrandText" placeholder="enter brand...">
+</div>
+<select class="form-select" [(ngModel)]="currentBrandId" aria-label="Default select example">
+    <option value="">All Brands</option>
+    <option *ngFor="let brand of brands | brandFilter:filterBrandText" value="{{brand.brandId}}">{{brand.brandName}}</option>
+</select>
+<br><br>
+<div class="mb-3">
+    <input type="text" [(ngModel)]="filterColorText" class="form-control" id="filterColorText" placeholder="enter color...">
+</div>
+<select class="form-select" [(ngModel)]="currentColorId" aria-label="Default select example">
+    <option value="">All Colors</option>
+    <option *ngFor="let color of colors | colorFilter:filterColorText" value="{{color.colorId}}">{{color.colorName}}</option>
+</select>
+<br>
+<a role="button" [routerLink] ="getRouterLink()" class="btn btn-secondary float-end" href="">Filter</a>
