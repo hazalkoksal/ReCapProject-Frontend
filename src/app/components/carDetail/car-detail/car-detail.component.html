@@ -3,7 +3,7 @@
           <div id="carouselExampleControls" class="carousel slide carousel-dark" data-bs-ride="carousel">
             <div class="carousel-inner">
               <div *ngFor="let carImage of carImages" [class]="getCurrentImageClass(carImage)">
-                 <!-- <img src="https://localhost:44334/{{carImage.carImagePath}}" class="d-block w-100" alt="https://localhost:44334/{{carImage.carImagePath}}"> -->
+                 <img src="https://localhost:44334/{{carImage.carImagePath}}" class="d-block w-100" alt="https://localhost:44334/{{carImage.carImagePath}}">
               </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"  data-bs-slide="prev">
@@ -22,13 +22,38 @@
             <li class="list-group-item"><b>Brand:</b> {{car.brandName}}</li>
             <li class="list-group-item"><b>Color:</b> {{car.colorName}}</li>
             <li class="list-group-item"><b>Model Year:</b> {{car.modelYear}}</li>
-            <li class="list-group-item"><b>Daily Price:</b> {{car.dailyPrice}}</li>
+            <li class="list-group-item"><b>Daily Price:</b> {{car.dailyPrice |currency:"TRY":"symbol-narrow"}}</li>
             <li class="list-group-item"><b>Description:</b> {{car.description}}</li>
           </ul>
     </div>
-    <div class="my-3">
-      <a role="button" class="btn btn-dark float-end" href="">Back</a>
-      <a role="button" class="btn btn-success float-end mx-1" href="">Rent</a>
-    </div>
 </div>
-
+<br>
+<hr>
+<br>
+<div class=" row">
+  <div class=col-md-4>
+    <div class="form-group">
+      <label for="customer" class="form-label">Customer</label>
+      <select class="form-select" id="customer" aria-label="Default select example">
+        <option *ngFor="let customer of customers" value="{{customer.customerId}}">{{customer.firstName}} {{customer.lastName}} - {{customer.companyName}}</option>
+      </select>
+    </div>
+  </div>
+  <div class=col-md-4>
+    <div class="form-group">
+      <label for="rentDate" class="form-label">Rent Date</label>
+      <input type="date" class="form-control" id="rentDate">
+    </div>
+  </div>
+  <div class=col-md-4>
+    <div class="form-group">
+      <label for="returnDate" class="form-label">Return Date</label>
+      <input type="date" class="form-control" id="returnDate">
+    </div>
+  </div>
+</div>
+<br>
+<div>
+  <a role="button" class="btn btn-outline-dark float-end" href="">Back</a>
+  <a role="button" class="btn btn-primary float-end mx-1" href="">Rent</a>
+</div>
