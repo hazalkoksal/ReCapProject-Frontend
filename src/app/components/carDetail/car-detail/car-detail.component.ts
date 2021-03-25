@@ -3,9 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { CarDTO } from 'src/app/models/carDTO';
 import { CarImage } from 'src/app/models/carImage';
 import { CustomerDTO } from 'src/app/models/customerDTO';
+import { ResponseModel } from 'src/app/models/responseModel';
 import { CarImageService } from 'src/app/services/car-image.service';
 import { CarService } from 'src/app/services/car.service';
 import { CustomerService } from 'src/app/services/customer.service';
+import { RentalService } from 'src/app/services/rental.service';
 
 @Component({
   selector: 'app-car-detail',
@@ -17,13 +19,21 @@ export class CarDetailComponent implements OnInit {
   cars:CarDTO[] = [];
   carImages:CarImage[] = [];
   customers:CustomerDTO[]=[];
+  visibleProp:string = "invisible";
 
-  constructor(private carService:CarService, private carImageService:CarImageService, private customerService:CustomerService,private activatedRoute:ActivatedRoute) { }
+  carId:number;
+  rentDate:Date;
+  returnDate:Date;
+  success:boolean;
+  message:string;
+
+  constructor(private carService:CarService, private carImageService:CarImageService, private customerService:CustomerService, private rentalService:RentalService, private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params=>{
         this.getCarsById(params["carId"]);
         this.getCarImagesByCar(params["carId"]);
+        this.carId = params["carId"];
     }) 
     
     this.getCustomers();
@@ -55,5 +65,18 @@ export class CarDetailComponent implements OnInit {
       this.customers=response.data;
     })
 }
+
+  checkCarAvaliable(){
+    if(this.rentDate && this.returnDate){
+      this.rentalService.checkCarAvaliable(this.carId,this.rentDate,this.returnDate).subscribe(response=>{
+        this.success=response.success;
+        this.message=response.message;
+      })
+    }
+  }
+
+  setVisible(){
+    this.visibleProp="visible";
+  }
 
 }

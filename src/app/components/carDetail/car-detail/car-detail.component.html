@@ -42,18 +42,57 @@
   <div class=col-md-4>
     <div class="form-group">
       <label for="rentDate" class="form-label">Rent Date</label>
-      <input type="date" class="form-control" id="rentDate">
+      <input type="date" [(ngModel)]="rentDate" (change) = "checkCarAvaliable()" class="form-control" id="rentDate">
     </div>
   </div>
   <div class=col-md-4>
     <div class="form-group">
       <label for="returnDate" class="form-label">Return Date</label>
-      <input type="date" class="form-control" id="returnDate">
+      <input type="date" [(ngModel)]="returnDate" (change) = "checkCarAvaliable()" class="form-control" id="returnDate">
     </div>
   </div>
 </div>
 <br>
+<div *ngIf="success==true" class="alert alert-success">
+  {{message}}
+</div>
+<div *ngIf="success==false" class="alert alert-danger">
+  {{message}}
+</div>
+<br>
 <div>
   <a role="button" class="btn btn-outline-dark float-end" href="">Back</a>
-  <a role="button" class="btn btn-primary float-end mx-1" href="">Rent</a>
+  <!-- <a role="button" class="btn btn-primary float-end mx-1" href="/card">Rent</a> -->
+  <button class="btn btn-primary float-end mx-1" (click)="setVisible()">Rent</button>
 </div>
+<br><br>
+<div [class]="visibleProp">
+<hr>
+<br>
+<div class="w-50 mx-auto mb-5">
+  <form>
+      <div class="form-group w-100">
+          <label for="name" class="form-label">Name On Card</label>
+          <input type="text" class="form-control" id="name" placeholder="HAZAL KÖKSAL">
+      </div>
+      <br>
+      <div class="form-group w-100">
+          <label for="cardNumber" class="form-label">Card Number</label>
+          <input type="text" class="form-control" id="cardNumber" placeholder="0000-0000-0000-0000">
+      </div>
+      <br>
+      <div class="form-group w-50">
+          <label for="eDate" class="form-label">Expiration Date</label>
+          <input type="text" class="form-control" id="eDate" placeholder="00/00">
+      </div>
+      <br>
+      <div class="form-group w-50">
+          <label for="cvv" class="form-label">CVV</label>
+          <input type="text" class="form-control" id="cvv" placeholder="000">
+      </div>
+      <br><br>
+      <a role="button" class="btn btn-primary float-end" href="">Pay</a>
+  </form>
+</div>
+</div>
+
