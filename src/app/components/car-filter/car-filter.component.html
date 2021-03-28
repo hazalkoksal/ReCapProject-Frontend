@@ -14,4 +14,4 @@
     <option *ngFor="let color of colors | colorFilter:filterColorText" value="{{color.colorId}}">{{color.colorName}}</option>
 </select>
 <br>
-<a role="button" [routerLink] ="getRouterLink()" class="btn btn-primary float-end" href="">Filter</a>
+<button class="btn btn-primary float-end" [routerLink] ="getRouterLink()">Filter</button>
