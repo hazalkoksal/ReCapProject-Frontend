@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ListResponseModel } from '../models/listResponseModel';
+import { Rental } from '../models/rental';
 import { RentalDTO } from '../models/rentalDTO';
 import { ResponseModel } from '../models/responseModel';
 
@@ -17,6 +18,11 @@ export class RentalService {
   getRentals():Observable<ListResponseModel<RentalDTO>>{
     let newPath = this.apiUrl + "Rentals/getrentaldetails";
     return this.httpClient.get<ListResponseModel<RentalDTO>>(newPath);
+  }
+
+  add(rental:Rental):Observable<ResponseModel>{
+    let newPath = this.apiUrl + "Rentals/add";
+    return this.httpClient.post<ResponseModel>(newPath,rental);
   }
 
   checkCarAvaliable(carId:number,rentDate:Date,returnDate:Date):Observable<ResponseModel>{

@@ -59,16 +59,16 @@
   </div>
 </div>
 <br>
-<div *ngIf="success==true" class="alert alert-success">
-  {{message}}
+<div *ngIf="carAvaliableSuccess==true" class="alert alert-success">
+  {{carAvaliableMessage}}
 </div>
-<div *ngIf="success==false" class="alert alert-danger">
-  {{message}}
+<div *ngIf="carAvaliableSuccess==false" class="alert alert-danger">
+  {{carAvaliableMessage}}
 </div>
 <br>
 <div>
   <button class="btn btn-outline-dark float-end" routerLink="">Back</button>
-  <button class="btn btn-primary float-end mx-1" (click)="rental()">Rent</button>
+  <button class="btn btn-primary float-end mx-1" (click)="createRental()">Rent</button>
 </div>
 
 
