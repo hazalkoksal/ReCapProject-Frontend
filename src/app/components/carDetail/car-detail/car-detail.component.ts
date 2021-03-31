@@ -5,7 +5,6 @@ import { CarDTO } from 'src/app/models/carDTO';
 import { CarImage } from 'src/app/models/carImage';
 import { CustomerDTO } from 'src/app/models/customerDTO';
 import { Rental } from 'src/app/models/rental';
-import { ResponseModel } from 'src/app/models/responseModel';
 import { CarImageService } from 'src/app/services/car-image.service';
 import { CarService } from 'src/app/services/car.service';
 import { CustomerService } from 'src/app/services/customer.service';
