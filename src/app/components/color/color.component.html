@@ -1,1 +1,18 @@
-
+<table class="table table-sm">
+    <thead class="table-secondary">
+        <tr>
+            <th>Color Id</th>
+            <th>Color Name</th>
+            <th></th>
+            <th><button type="button" class="btn btn-outline-success" routerLink="/colors/add">Add</button></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let color of colors">
+            <td>{{color.colorId}}</td>
+            <td>{{color.colorName}}</td>
+            <td><button type="button" class="btn btn-outline-warning btn-sm" routerLink="/colors/update/{{color.colorId}}">Update</button></td>
+            <td><button type="button" class="btn btn-outline-danger btn-sm" (click)="delete(color.colorId)">Delete</button></td>
+        </tr>
+    </tbody>    
+</table>

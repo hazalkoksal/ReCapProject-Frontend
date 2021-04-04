@@ -1,1 +1,18 @@
-
+<table class="table table-sm">
+    <thead class="table-secondary">
+        <tr>
+            <th>Brand Id</th>
+            <th>Brand Name</th>
+            <th></th>
+            <th><button type="button" class="btn btn-outline-success" routerLink="/brands/add">Add</button></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let brand of brands">
+            <td>{{brand.brandId}}</td>
+            <td>{{brand.brandName}}</td>
+            <td><button type="button" class="btn btn-outline-warning btn-sm" routerLink="/brands/update/{{brand.brandId}}">Update</button></td>
+            <td><button type="button" class="btn btn-outline-danger btn-sm" (click)="delete(brand.brandId)">Delete</button></td>
+        </tr>
+    </tbody>    
+</table>
