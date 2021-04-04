@@ -21,12 +21,12 @@ export class CarDetailComponent implements OnInit {
   carImages:CarImage[] = [];
   customers:CustomerDTO[]=[];
 
-  carId:number;
+  customerId:number=null;
+  carId:number=null;
   rentDate:Date;
   returnDate:Date;
   carAvaliableSuccess:boolean;
   carAvaliableMessage:string;
-  customerId:number;
   totalPrice:number;
 
   constructor(private carService:CarService, private carImageService:CarImageService, private customerService:CustomerService, private rentalService:RentalService, private activatedRoute:ActivatedRoute, private toastrService:ToastrService, private router:Router) { }
@@ -100,12 +100,12 @@ export class CarDetailComponent implements OnInit {
   }
 
   createRental(){
-    let rental:Rental = {carId:this.carId,
-                         customerId:this.customerId,
+    let rental:Rental = {carId:Number(this.carId),
+                         customerId:Number(this.customerId),
                          rentDate:this.rentDate,
                          returnDate:this.returnDate};
     
-    if(rental.carId == undefined || rental.customerId == undefined || rental.rentDate==undefined || rental.returnDate==undefined || this.carAvaliableSuccess == false){
+    if(rental.carId == 0 || rental.customerId == 0 || rental.rentDate==undefined || rental.returnDate==undefined || this.carAvaliableSuccess == false){
       this.toastrService.error("Bilgilerinizi eksiksiz ve doğru giriniz")
     }
     else{

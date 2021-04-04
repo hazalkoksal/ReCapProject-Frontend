@@ -13,7 +13,7 @@ export class CustomerService {
 
   constructor(private httpClient:HttpClient) { }
 
-  getCustomers():Observable<ListResponseModel<CustomerDTO>>{
-    return this.httpClient.get<ListResponseModel<CustomerDTO>>(this.apiUrl);
+  getCustomers():Observable<ListResponseModel<CustomerDTO[]>>{
+    return this.httpClient.get<ListResponseModel<CustomerDTO[]>>(this.apiUrl);
   }
 }

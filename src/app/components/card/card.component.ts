@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Card } from 'src/app/models/card';
 import { Rental } from 'src/app/models/rental';
@@ -19,23 +19,13 @@ export class CardComponent implements OnInit {
   cardNumber:string = "";
   expirationDate:string = "";
   cvv:string = "";
-  filterText:string;
 
-  cardValidSuccess:boolean;
-  cardValidMessage:string;
-  rentalAddSuccess:boolean;
-  rentalAddMessage:string;
-
-  constructor(private cardService:CardService,private rentalService:RentalService,private activatedRoute:ActivatedRoute, private toastrService:ToastrService) { }
+  constructor(private cardService:CardService,private rentalService:RentalService,private activatedRoute:ActivatedRoute, private router:Router,private toastrService:ToastrService) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params=>{
       if(params["rental"]){
-        let myRental:Rental = JSON.parse(params["rental"]);
-        this.rental = {carId:Number(myRental.carId),
-                       customerId:Number(myRental.customerId),
-                       rentDate:myRental.rentDate,
-                       returnDate:myRental.returnDate};
+        this.rental = JSON.parse(params["rental"]);
       }
     })
   }
@@ -46,8 +36,8 @@ export class CardComponent implements OnInit {
                      expirationDate:this.expirationDate,
                      cvv:this.cvv};
 
-    if(card.customerName == undefined || card.cardNumber == undefined || card.expirationDate == undefined || card.cvv == undefined){
-      this.toastrService.error("Kart bilgilerini eksiksiz giriniz");
+    if(card.customerName == '' || card.cardNumber == '' || card.expirationDate == '' || card.cvv == ''){
+      this.toastrService.error("Kart bilgilerinizi eksiksiz giriniz");
     }
     else{
       this.checkCardValid(card);
@@ -56,14 +46,11 @@ export class CardComponent implements OnInit {
 
   checkCardValid(card:Card){
     this.cardService.checkCardValid(card).subscribe(response=>{
-      this.cardValidSuccess=response.success;
-      this.cardValidMessage=response.message;
-
-      if(this.cardValidSuccess == false){
-        this.toastrService.error(this.cardValidMessage);
+      if(response.success == false){
+        this.toastrService.error(response.message);
       }
       else{
-        this.toastrService.success(this.cardValidMessage);
+        this.toastrService.success(response.message);
         this.addRental(this.rental);
       }
     })
@@ -71,11 +58,9 @@ export class CardComponent implements OnInit {
 
   addRental(rental:Rental){
     this.rentalService.add(rental).subscribe(response=>{
-      this.rentalAddSuccess = response.success;
-      this.rentalAddMessage = response.message;
-
-      if(this.rentalAddSuccess == true){
-        this.toastrService.success(this.rentalAddMessage);
+      if(response.success==true){
+        this.toastrService.success(response.message);
+        this.router.navigate(['']);
       }
     })
   }

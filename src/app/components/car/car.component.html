@@ -9,7 +9,7 @@
         <div class="mb-3">
             <input type="text" [(ngModel)]="filterText" class="form-control" id="filterText" placeholder="enter car name...">
         </div>
-        <table *ngIf="dataLoaded==true" class="table table-hover">
+        <table *ngIf="dataLoaded==true" class="table">
             <thead class="table-secondary">
                 <tr>
                     <th>Car Id</th>
@@ -19,10 +19,13 @@
                     <th>Model Year</th>
                     <th>Daily Price</th>
                     <th>Description</th>
+                    <th></th>
+                    <th></th>
+                    <th><button type="button" class="btn btn-outline-success" routerLink="/cars/add">Add</button></th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let car of cars | carFilter:filterText" routerLink="/cardetail/{{car.carId}}">
+                <tr *ngFor="let car of cars | carFilter:filterText">
                     <td>{{car.carId}}</td>
                     <td>{{car.carName}}</td>
                     <td>{{car.brandName}}</td>
@@ -30,6 +33,9 @@
                     <td>{{car.modelYear}}</td>
                     <td>{{car.dailyPrice |currency:"TRY":"symbol-narrow"}}</td>
                     <td>{{car.description}}</td>
+                    <td><button type="button" class="btn btn-outline-warning btn-sm" routerLink="/cars/update/{{car.carId}}">Update</button></td>
+                    <td><button type="button" class="btn btn-outline-danger btn-sm" (click)="delete(car.carId)">Delete</button></td>
+                    <td><button type="button" class="btn btn-outline-secondary btn-sm" routerLink="/cars/cardetail/{{car.carId}}">Detail</button></td>
                 </tr>
             </tbody>    
         </table>

@@ -13,7 +13,7 @@ export class BrandService {
 
   constructor(private httpClient:HttpClient) { }
 
-  getBrands():Observable<ListResponseModel<Brand>>{
-    return this.httpClient.get<ListResponseModel<Brand>>(this.apiUrl);
+  getBrands():Observable<ListResponseModel<Brand[]>>{
+    return this.httpClient.get<ListResponseModel<Brand[]>>(this.apiUrl);
   }
 }

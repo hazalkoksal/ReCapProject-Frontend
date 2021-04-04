@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { Car } from 'src/app/models/car';
 import { CarDTO } from 'src/app/models/carDTO';
 import { CarService } from 'src/app/services/car.service';
 
@@ -11,10 +13,11 @@ import { CarService } from 'src/app/services/car.service';
 export class CarComponent implements OnInit {
 
   cars:CarDTO[] = [];
+  car:Car;
   dataLoaded=false;
   filterText="";
 
-  constructor(private carService:CarService, private activatedRoute:ActivatedRoute) { }
+  constructor(private carService:CarService, private activatedRoute:ActivatedRoute, private toastrService:ToastrService) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params=>{
@@ -58,6 +61,19 @@ export class CarComponent implements OnInit {
     this.carService.getCarsByBrandandColor(brandId,colorId).subscribe(response => {
       this.cars=response.data;
       this.dataLoaded=true;
+    })
+  }
+
+  delete(carId:number){
+    this.carService.getById(carId).subscribe(response => {
+      this.car = response.data;
+
+      this.carService.delete(this.car).subscribe(response => {
+        if(response.success == true){
+          this.toastrService.error("Araç silindi");
+          this.getCars();
+        }
+      })
     })
   }
 
