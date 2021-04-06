@@ -1,1 +1,21 @@
-<p>color-add works!</p>
+<div class="content">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="title">Color</h5>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="colorAddForm">
+                    <div class="form-group mb-3">
+                        <label for="colorName" class="form-label">Color Name</label>
+                        <input type="text" class="form-control" id="colorName" formControlName="colorName" placeholder="enter color name...">
+                    </div>
+                </form>                
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-outline-dark float-end" routerLink="/colors">Back</button>
+                <button class="btn btn-fill btn-primary float-end mx-1" (click)="add()">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
