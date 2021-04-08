@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Brand } from '../models/brand';
-import { ListResponseModel } from '../models/listResponseModel';
+import { DataResponseModel } from '../models/dataResponseModel';
 import { ResponseModel } from '../models/responseModel';
 
 @Injectable({
@@ -14,14 +14,14 @@ export class BrandService {
 
   constructor(private httpClient:HttpClient) { }
 
-  getBrands():Observable<ListResponseModel<Brand[]>>{
+  getBrands():Observable<DataResponseModel<Brand[]>>{
     let newPath = this.apiUrl + "Brands/getall"
-    return this.httpClient.get<ListResponseModel<Brand[]>>(newPath);
+    return this.httpClient.get<DataResponseModel<Brand[]>>(newPath);
   }
 
-  getById(brandId:number):Observable<ListResponseModel<Brand>>{
+  getById(brandId:number):Observable<DataResponseModel<Brand>>{
     let newPath = this.apiUrl + "Brands/getbyid?id=" + brandId;
-    return this.httpClient.get<ListResponseModel<Brand>>(newPath);
+    return this.httpClient.get<DataResponseModel<Brand>>(newPath);
   }
 
   add(brand:Brand):Observable<ResponseModel>{

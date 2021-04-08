@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ListResponseModel } from '../models/listResponseModel';
+import { DataResponseModel } from '../models/dataResponseModel';
 import { Rental } from '../models/rental';
 import { RentalDTO } from '../models/rentalDTO';
 import { ResponseModel } from '../models/responseModel';
@@ -15,9 +15,9 @@ export class RentalService {
 
   constructor(private httpClient:HttpClient) { }
 
-  getRentals():Observable<ListResponseModel<RentalDTO[]>>{
+  getRentals():Observable<DataResponseModel<RentalDTO[]>>{
     let newPath = this.apiUrl + "Rentals/getrentaldetails";
-    return this.httpClient.get<ListResponseModel<RentalDTO[]>>(newPath);
+    return this.httpClient.get<DataResponseModel<RentalDTO[]>>(newPath);
   }
 
   add(rental:Rental):Observable<ResponseModel>{
