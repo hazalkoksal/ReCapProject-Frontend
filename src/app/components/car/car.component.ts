@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Car } from 'src/app/models/car';
 import { CarDTO } from 'src/app/models/carDTO';
+import { AuthService } from 'src/app/services/auth.service';
 import { CarService } from 'src/app/services/car.service';
 
 @Component({
@@ -17,7 +18,7 @@ export class CarComponent implements OnInit {
   dataLoaded=false;
   filterText="";
 
-  constructor(private carService:CarService, private activatedRoute:ActivatedRoute, private toastrService:ToastrService) { }
+  constructor(private carService:CarService, private activatedRoute:ActivatedRoute, private toastrService:ToastrService, private authService:AuthService, private router:Router) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params=>{
@@ -65,16 +66,22 @@ export class CarComponent implements OnInit {
   }
 
   delete(carId:number){
-    this.carService.getById(carId).subscribe(response => {
-      this.car = response.data;
-
-      this.carService.delete(this.car).subscribe(response => {
-        if(response.success == true){
-          this.toastrService.error("Araç silindi");
-          this.getCars();
-        }
+    if(this.authService.isAuthenticated()){
+      this.carService.getById(carId).subscribe(response => {
+        this.car = response.data;
+  
+        this.carService.delete(this.car).subscribe(response => {
+          if(response.success == true){
+            this.toastrService.error("Araç silindi");
+            this.getCars();
+          }
+        })
       })
-    })
+    }
+    else{
+      this.toastrService.info("Sisteme giriş yapmalısınız");
+      this.router.navigate(["login"]);
+    }
   }
 
 }
