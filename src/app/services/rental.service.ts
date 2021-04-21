@@ -29,5 +29,10 @@ export class RentalService {
     let newPath = this.apiUrl + "Rentals/checkifcaravaliable?carId=" + carId + "&rentDate=" + rentDate + "&returnDate=" + returnDate;
     return this.httpClient.get<ResponseModel>(newPath);
   }
+
+  checkFindexPoint(carId:number,customerId:number):Observable<ResponseModel>{
+    let newPath = this.apiUrl + "Rentals/checkiffindexpointenough?carId="+ carId + "&customerId=" + customerId;
+    return this.httpClient.get<ResponseModel>(newPath);
+  }
   
 }

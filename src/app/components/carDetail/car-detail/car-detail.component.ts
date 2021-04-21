@@ -25,9 +25,10 @@ export class CarDetailComponent implements OnInit {
   carId:number=null;
   rentDate:Date;
   returnDate:Date;
+  totalPrice:number;
+
   carAvaliableSuccess:boolean;
   carAvaliableMessage:string;
-  totalPrice:number;
 
   constructor(private carService:CarService, private carImageService:CarImageService, private customerService:CustomerService, private rentalService:RentalService, private activatedRoute:ActivatedRoute, private toastrService:ToastrService, private router:Router) { }
 
@@ -76,7 +77,7 @@ export class CarDetailComponent implements OnInit {
         this.calculateTotalPrice();
       }
       else{
-        this.rentalService.checkCarAvaliable(this.carId,this.rentDate,this.returnDate).subscribe(response=>{
+        this.rentalService.checkCarAvaliable(this.carId,this.rentDate,this.returnDate).subscribe(response => {
           this.carAvaliableSuccess=response.success;
           this.carAvaliableMessage=response.message;
           this.calculateTotalPrice();
@@ -109,8 +110,15 @@ export class CarDetailComponent implements OnInit {
       this.toastrService.error("Bilgilerinizi eksiksiz ve doğru giriniz")
     }
     else{
-      this.toastrService.info("Ödeme sayfasına yönlendiriliyorsunuz...");
-      this.router.navigate(['/card/',JSON.stringify(rental)]);
+      this.rentalService.checkFindexPoint(this.carId,this.customerId).subscribe(response => {
+        if(response.success == false){
+          this.toastrService.error(response.message);
+        }
+        else{
+          this.toastrService.info("Ödeme sayfasına yönlendiriliyorsunuz...");
+          this.router.navigate(['/card/',JSON.stringify(rental)]);
+        }
+      })
     }
   }
 
