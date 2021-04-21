@@ -22,7 +22,7 @@ const routes: Routes = [
   {path:"cars/brand/:brandId",component:HomeComponent},
   {path:"cars/color/:colorId",component:HomeComponent},
   {path:"cars/brand/:brandId/color/:colorId",component:HomeComponent},
-  {path:"cars/cardetail/:carId", component:CarDetailComponent},
+  {path:"cars/cardetail/:carId", component:CarDetailComponent, canActivate:[LoginGuard]},
   {path:"card/:rental", component:CardComponent},
   {path:"cars/add",component:CarAddComponent, canActivate:[LoginGuard]},
   {path:"cars/update/:carId",component:CarUpdateComponent, canActivate:[LoginGuard]},
