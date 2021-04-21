@@ -16,11 +16,18 @@ export class AuthService {
   constructor(private httpClient:HttpClient) { }
 
   login(loginModel:LoginModel):Observable<DataResponseModel<TokenModel>>{
-    return this.httpClient.post<DataResponseModel<TokenModel>>(this.apiUrl + "auth/login",loginModel);
+    let newPath = this.apiUrl + "Auth/login";
+    return this.httpClient.post<DataResponseModel<TokenModel>>(newPath,loginModel);
   }
 
   register(registerModel:RegisterModel):Observable<DataResponseModel<TokenModel>>{
-    return this.httpClient.post<DataResponseModel<TokenModel>>(this.apiUrl + "auth/register",registerModel);
+    let newPath = this.apiUrl + "Auth/register";
+    return this.httpClient.post<DataResponseModel<TokenModel>>(newPath,registerModel);
+  }
+
+  logout(){
+    localStorage.removeItem("token");
+    localStorage.removeItem("userName");
   }
 
   isAuthenticated(){

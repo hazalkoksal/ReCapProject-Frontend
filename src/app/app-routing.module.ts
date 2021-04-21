@@ -17,6 +17,7 @@ import { LoginGuard } from './guards/login.guard';
 
 const routes: Routes = [
   {path:"",component:HomeComponent},
+  {path:"home",component:HomeComponent},
   {path:"cars",component:HomeComponent},
   {path:"cars/brand/:brandId",component:HomeComponent},
   {path:"cars/color/:colorId",component:HomeComponent},
