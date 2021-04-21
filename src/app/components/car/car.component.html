@@ -19,6 +19,7 @@
                     <th>Model Year</th>
                     <th>Daily Price</th>
                     <th>Description</th>
+                    <th>Findex Point</th>
                     <th></th>
                     <th></th>
                     <th><button type="button" class="btn btn-outline-success" routerLink="/cars/add">Add</button></th>
@@ -33,6 +34,7 @@
                     <td>{{car.modelYear}}</td>
                     <td>{{car.dailyPrice |currency:"TRY":"symbol-narrow"}}</td>
                     <td>{{car.description}}</td>
+                    <td>{{car.findexPoint}} P</td>
                     <td><button type="button" class="btn btn-outline-warning btn-sm" routerLink="/cars/update/{{car.carId}}">Update</button></td>
                     <td><button type="button" class="btn btn-outline-danger btn-sm" (click)="delete(car.carId)">Delete</button></td>
                     <td><button type="button" class="btn btn-outline-secondary btn-sm" routerLink="/cars/cardetail/{{car.carId}}">Detail</button></td>

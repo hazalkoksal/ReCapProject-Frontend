@@ -3,4 +3,5 @@ export interface CustomerDTO{
     firstName:string;
     lastName:string;
     companyName:string;
+    findexPoint:number;
 }

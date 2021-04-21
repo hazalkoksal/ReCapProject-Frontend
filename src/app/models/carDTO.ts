@@ -6,4 +6,5 @@ export interface CarDTO{
     modelYear:string;
     dailyPrice:number;
     description:string;
+    findexPoint:number;
 }
