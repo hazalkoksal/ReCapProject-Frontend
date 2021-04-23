@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class NaviComponent implements OnInit {
 
   token:string;
+  userId:number;
   userName:string;
 
   constructor(private authService:AuthService, private router:Router, private toastrService:ToastrService) { }
@@ -22,6 +23,7 @@ export class NaviComponent implements OnInit {
   checkAuthenticated(){
     if(this.authService.isAuthenticated()){
       this.token = localStorage.getItem("token");
+      this.userId = Number(localStorage.getItem("userId"));
       this.userName = localStorage.getItem("userName");
     }
   }

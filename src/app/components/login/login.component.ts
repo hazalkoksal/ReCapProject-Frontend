@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit {
 
   getUserByMail(email:string){
     this.userService.getByMail(email).subscribe(response => {
+      localStorage.setItem("userId",response.data.userId.toString());
       localStorage.setItem("userName",response.data.firstName + " " + response.data.lastName);
     })
   }

@@ -13,6 +13,7 @@ import { ColorComponent } from './components/color/color.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register/register.component';
+import { UserUpdateComponent } from './components/user-update/user-update/user-update.component';
 import { LoginGuard } from './guards/login.guard';
 
 const routes: Routes = [
@@ -33,7 +34,8 @@ const routes: Routes = [
   {path:"colors/add",component:ColorAddComponent, canActivate:[LoginGuard]},
   {path:"colors/update/:colorId",component:ColorUpdateComponent, canActivate:[LoginGuard]},
   {path:"login",component:LoginComponent},
-  {path:"register",component:RegisterComponent}
+  {path:"register",component:RegisterComponent},
+  {path:"users/update/:userId",component:UserUpdateComponent}
 ];
 
 @NgModule({

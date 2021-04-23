@@ -21,7 +21,7 @@
           <button class="btn btn-dark" routerLink="/register">Sign up</button>
         </form>
         <form *ngIf="token" class="d-flex">
-          <div  class="mx-3 mt-2">{{userName}}</div>
+          <button type="button" class="btn btn-light mt-1" routerLink="/users/update/{{userId}}">{{userName}}</button>
           <button class="btn btn-outline-dark" (click)="logout()">Log out</button>
         </form>
       </div>

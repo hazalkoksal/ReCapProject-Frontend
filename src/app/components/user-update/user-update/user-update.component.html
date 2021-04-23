@@ -1,0 +1,29 @@
+<div class="content">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="title">User</h5>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="userUpdateForm">
+                    <div class="form-group mb-3">
+                        <label for="userId" class="form-label">User Id</label>
+                        <input type="number" class="form-control" id="userId" formControlName="userId" placeholder="" readonly>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="firstName" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="firstName" formControlName="firstName" placeholder="enter first name...">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="lastName" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="enter last name...">
+                    </div>
+                </form>                
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-outline-dark float-end" routerLink="">Back</button>
+                <button class="btn btn-fill btn-primary float-end mx-1" (click)="update()">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
