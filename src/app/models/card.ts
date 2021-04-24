@@ -1,6 +1,6 @@
 export interface Card{
     cardId?:number;
-    customerName:string;
+    cardholderName:string;
     cardNumber:string;
     expirationDate:string;
     cvv:string;

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Card } from 'src/app/models/card';
@@ -13,14 +14,10 @@ import { RentalService } from 'src/app/services/rental.service';
 })
 export class CardComponent implements OnInit {
 
+  cardForm:FormGroup;
   rental:Rental;
 
-  cardholderName:string;
-  cardNumber:string = "";
-  expirationDate:string = "";
-  cvv:string = "";
-
-  constructor(private cardService:CardService,private rentalService:RentalService,private activatedRoute:ActivatedRoute, private router:Router,private toastrService:ToastrService) { }
+  constructor(private formBuilder:FormBuilder,private cardService:CardService,private rentalService:RentalService,private activatedRoute:ActivatedRoute, private router:Router,private toastrService:ToastrService) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params=>{
@@ -28,19 +25,25 @@ export class CardComponent implements OnInit {
         this.rental = JSON.parse(params["rental"]);
       }
     })
+    this.createCardForm();
   }
 
-  createCard(){
-    let card:Card = {customerName:this.cardholderName,
-                     cardNumber:this.cardNumber,
-                     expirationDate:this.expirationDate,
-                     cvv:this.cvv};
+  createCardForm(){
+    this.cardForm = this.formBuilder.group({
+      cardholderName:["",Validators.required],
+      cardNumber:["",Validators.required],
+      expirationDate:["",Validators.required],
+      cvv:["",Validators.required]
+    })
+  }
 
-    if(card.customerName == '' || card.cardNumber == '' || card.expirationDate == '' || card.cvv == ''){
-      this.toastrService.error("Kart bilgilerinizi eksiksiz giriniz");
+  pay(){
+    if(this.cardForm.valid){
+      let card:Card = Object.assign({},this.cardForm.value);
+      this.checkCardValid(card);
     }
     else{
-      this.checkCardValid(card);
+      this.toastrService.error("Kart bilgilerinizi eksiksiz giriniz");
     }
   }
 
