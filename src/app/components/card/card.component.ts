@@ -45,23 +45,20 @@ export class CardComponent implements OnInit {
   }
 
   checkCardValid(card:Card){
-    this.cardService.checkCardValid(card).subscribe(response=>{
-      if(response.success == false){
-        this.toastrService.error(response.message);
-      }
-      else{
+    this.cardService.checkCardValid(card).subscribe(
+      response => {
         this.toastrService.success(response.message);
         this.addRental(this.rental);
-      }
+    },
+    reponseError => {
+      this.toastrService.error(reponseError.error.message);
     })
   }
 
   addRental(rental:Rental){
     this.rentalService.add(rental).subscribe(response=>{
-      if(response.success==true){
-        this.toastrService.success(response.message);
-        this.router.navigate(['']);
-      }
+      this.toastrService.success(response.message);
+      this.router.navigate(['']);
     })
   }
 

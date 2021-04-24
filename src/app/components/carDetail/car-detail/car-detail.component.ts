@@ -20,6 +20,7 @@ export class CarDetailComponent implements OnInit {
   car:CarDTO;
   carImages:CarImage[] = [];
   customers:CustomerDTO[]=[];
+  rental:Rental;
 
   customerId:number=null;
   carId:number=null;
@@ -73,17 +74,34 @@ export class CarDetailComponent implements OnInit {
     if(this.rentDate && this.returnDate){
       if(this.returnDate <= this.rentDate){
         this.carAvaliableSuccess=false;
-        this.carAvaliableMessage="Dönüş tarihi kiralama tarihinden büyük olmalıdır"
+        this.carAvaliableMessage="Dönüş tarihi kiralama tarihinden sonra olmalıdır"
         this.calculateTotalPrice();
       }
       else{
-        this.rentalService.checkCarAvaliable(this.carId,this.rentDate,this.returnDate).subscribe(response => {
+        this.rentalService.checkCarAvaliable(this.carId,this.rentDate,this.returnDate).subscribe(
+          response => {
           this.carAvaliableSuccess=response.success;
           this.carAvaliableMessage=response.message;
+          this.calculateTotalPrice();
+        },
+        responseError => {
+          this.carAvaliableSuccess=responseError.error.success;
+          this.carAvaliableMessage=responseError.error.message;
           this.calculateTotalPrice();
         })
       }
     }
+  }
+
+  checkFindexPoint(){
+    this.rentalService.checkFindexPoint(this.carId,this.customerId).subscribe(
+      response => {
+        this.toastrService.info("Ödeme sayfasına yönlendiriliyorsunuz...");
+        this.router.navigate(['/card/',JSON.stringify(this.rental)]);
+      },
+      responseError => {
+        this.toastrService.error(responseError.error.message);
+    });
   }
 
   calculateTotalPrice(){
@@ -101,24 +119,16 @@ export class CarDetailComponent implements OnInit {
   }
 
   createRental(){
-    let rental:Rental = {carId:Number(this.carId),
-                         customerId:Number(this.customerId),
-                         rentDate:this.rentDate,
-                         returnDate:this.returnDate};
+    this.rental = {carId:Number(this.carId),
+                   customerId:Number(this.customerId),
+                   rentDate:this.rentDate,
+                   returnDate:this.returnDate};
     
-    if(rental.carId == 0 || rental.customerId == 0 || rental.rentDate==undefined || rental.returnDate==undefined || this.carAvaliableSuccess == false){
+    if(this.rental.carId == 0 || this.rental.customerId == 0 || this.rental.rentDate==undefined || this.rental.returnDate==undefined || this.carAvaliableSuccess == false){
       this.toastrService.error("Bilgilerinizi eksiksiz ve doğru giriniz")
     }
     else{
-      this.rentalService.checkFindexPoint(this.carId,this.customerId).subscribe(response => {
-        if(response.success == false){
-          this.toastrService.error(response.message);
-        }
-        else{
-          this.toastrService.info("Ödeme sayfasına yönlendiriliyorsunuz...");
-          this.router.navigate(['/card/',JSON.stringify(rental)]);
-        }
-      })
+      this.checkFindexPoint();
     }
   }
 
