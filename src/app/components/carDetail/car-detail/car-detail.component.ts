@@ -118,7 +118,7 @@ export class CarDetailComponent implements OnInit {
     }
   }
 
-  createRental(){
+  rent(){
     this.rental = {carId:Number(this.carId),
                    customerId:Number(this.customerId),
                    rentDate:this.rentDate,
