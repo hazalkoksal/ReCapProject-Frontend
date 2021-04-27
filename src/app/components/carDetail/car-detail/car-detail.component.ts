@@ -74,7 +74,7 @@ export class CarDetailComponent implements OnInit {
     if(this.rentDate && this.returnDate){
       if(this.returnDate <= this.rentDate){
         this.carAvaliableSuccess=false;
-        this.carAvaliableMessage="Dönüş tarihi kiralama tarihinden sonra olmalıdır"
+        this.carAvaliableMessage="Dönüş tarihi kiralama tarihinden büyük olmalıdır"
         this.calculateTotalPrice();
       }
       else{

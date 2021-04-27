@@ -53,7 +53,8 @@ export class CarUpdateComponent implements OnInit {
       carName:[car.carName,Validators.required],
       modelYear:[car.modelYear,Validators.required],
       dailyPrice:[car.dailyPrice,Validators.required],
-      description:[car.description,Validators.required]
+      description:[car.description,Validators.required],
+      findexPoint:[car.findexPoint,Validators.required]
     })
   }
 
