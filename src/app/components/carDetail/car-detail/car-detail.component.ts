@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CarDTO } from 'src/app/models/carDTO';
 import { CarImage } from 'src/app/models/carImage';
-import { CustomerDTO } from 'src/app/models/customerDTO';
 import { Rental } from 'src/app/models/rental';
 import { CarImageService } from 'src/app/services/car-image.service';
 import { CarService } from 'src/app/services/car.service';
@@ -17,9 +16,10 @@ import { RentalService } from 'src/app/services/rental.service';
 })
 export class CarDetailComponent implements OnInit {
 
+  userId:number = Number(localStorage.getItem("userId"));
+
   car:CarDTO;
   carImages:CarImage[] = [];
-  customers:CustomerDTO[]=[];
   rental:Rental;
 
   customerId:number;
@@ -35,10 +35,10 @@ export class CarDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params=>{
-        this.carId = params["carId"];
+        this.carId = Number(params["carId"]);
         this.getCarById(this.carId);
         this.getCarImagesByCar(this.carId);
-        this.getCustomers();
+        this.getCustomerId(this.userId);
     }) 
   }
 
@@ -63,9 +63,14 @@ export class CarDetailComponent implements OnInit {
     }
 }
 
-  getCustomers(){
-    this.customerService.getCustomers().subscribe(response=>{
-      this.customers=response.data;
+  getCustomerId(userId:number){
+    this.customerService.getByUserId(userId).subscribe(response=>{
+      if(response.data != null){
+        this.customerId=response.data.customerId;
+      }
+      else{
+        this.customerId = undefined;
+      }
     })
   }
 
@@ -128,8 +133,8 @@ export class CarDetailComponent implements OnInit {
   }
 
   createRental(){
-    this.rental = {carId:Number(this.carId),
-                   customerId:Number(this.customerId),
+    this.rental = {carId:this.carId,
+                   customerId:this.customerId,
                    rentDate:this.rentDate,
                    returnDate:this.returnDate};
   }

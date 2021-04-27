@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Customer } from '../models/customer';
 import { CustomerDTO } from '../models/customerDTO';
 import { DataResponseModel } from '../models/dataResponseModel';
 
@@ -9,11 +10,17 @@ import { DataResponseModel } from '../models/dataResponseModel';
 })
 export class CustomerService {
 
-  apiUrl = 'https://localhost:44334/api/Customers/getcustomerdetails';
+  apiUrl = 'https://localhost:44334/api/';
 
   constructor(private httpClient:HttpClient) { }
 
   getCustomers():Observable<DataResponseModel<CustomerDTO[]>>{
-    return this.httpClient.get<DataResponseModel<CustomerDTO[]>>(this.apiUrl);
+    let newPath = this.apiUrl + "Customers/getcustomerdetails";
+    return this.httpClient.get<DataResponseModel<CustomerDTO[]>>(newPath);
+  }
+
+  getByUserId(userId:number):Observable<DataResponseModel<Customer>>{
+    let newPath = this.apiUrl + "Customers/getbyuserid?id=" + userId;
+    return this.httpClient.get<DataResponseModel<Customer>>(newPath);
   }
 }
