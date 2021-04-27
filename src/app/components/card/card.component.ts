@@ -16,11 +16,18 @@ import { RentalService } from 'src/app/services/rental.service';
 })
 export class CardComponent implements OnInit {
 
-  cardForm:FormGroup;
   rental:Rental;
+  userId:number = Number(localStorage.getItem("userId"));
+
+  cardholderName:string;
+  cardNumber:string;
+  expirationDate:string;
+  cvv:string;
+
   checkStatus:boolean = false;
   savedCard:CreditCard;
-  userId:number = Number(localStorage.getItem("userId"));
+  card:Card;
+  
 
   constructor(private formBuilder:FormBuilder,private cardService:CardService,private rentalService:RentalService, private creditCardService:CreditCardService, private activatedRoute:ActivatedRoute, private router:Router,private toastrService:ToastrService) { }
 
@@ -36,42 +43,34 @@ export class CardComponent implements OnInit {
   getCreditCardByUserId(userId:number){
     this.creditCardService.getByUserId(userId).subscribe(response => {
         this.savedCard = response.data;
-        if(this.savedCard == null){
-          this.createCardForm();
-        }
-        else{
-          this.createSavedCardForm(this.savedCard);
+        if(this.savedCard != null){
+          this.getSavedCard(this.savedCard);
         }
     })
   }
 
-  createCardForm(){
-    this.cardForm = this.formBuilder.group({
-      cardholderName:["",Validators.required],
-      cardNumber:["",Validators.required],
-      expirationDate:["",Validators.required],
-      cvv:["",Validators.required]
-    })
-  }
-
-  createSavedCardForm(creditCard:CreditCard){
-    this.cardForm = this.formBuilder.group({
-      expirationDate:[creditCard.expirationDate,Validators.required],
-      cvv:[creditCard.cvv,Validators.required],
-      cardNumber:[creditCard.cardNumber,Validators.required],
-      cardholderName:[creditCard.cardholderName,Validators.required]
-    })
+  getSavedCard(creditCard:CreditCard){
+    this.cardholderName = creditCard.cardholderName;
+    this.cardNumber = creditCard.cardNumber;
+    this.expirationDate = creditCard.expirationDate;
+    this.cvv = creditCard.cvv;
   }
 
   pay(){
-    if(this.cardForm.valid){
-      let card:Card = Object.assign({},this.cardForm.value);
-      this.checkCardValid(card);
-    }
-    else{
-      let card:Card = Object.assign({},this.cardForm.value);
+    if(this.cardholderName == undefined || this.cardNumber == undefined || this.expirationDate == undefined || this.cvv == undefined){
       this.toastrService.error("Kart bilgilerinizi eksiksiz giriniz");
     }
+    else{
+      this.createCard();
+      this.checkCardValid(this.card);
+    }
+  }
+
+  createCard(){
+    this.card = {cardholderName: this.cardholderName,
+                 cardNumber: this.cardNumber,
+                 expirationDate: this.expirationDate,
+                 cvv:this.cvv};
   }
 
   checkCardValid(card:Card){
@@ -97,12 +96,6 @@ export class CardComponent implements OnInit {
     })
   }
 
-  addCreditCard(creditCard:CreditCard){
-    this.creditCardService.add(creditCard).subscribe(response => {
-      this.addRental(this.rental);
-    })
-  }
-
   createCreditCard(card:Card){
     let creditCard:CreditCard = {userId:this.userId,
                                  cardNumber:card.cardNumber,
@@ -111,6 +104,12 @@ export class CardComponent implements OnInit {
                                  cvv:card.cvv};
 
     this.addCreditCard(creditCard);
+  }
+
+  addCreditCard(creditCard:CreditCard){
+    this.creditCardService.add(creditCard).subscribe(response => {
+      this.addRental(this.rental);
+    })
   }
 
 }

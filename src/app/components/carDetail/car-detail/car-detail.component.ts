@@ -22,8 +22,8 @@ export class CarDetailComponent implements OnInit {
   customers:CustomerDTO[]=[];
   rental:Rental;
 
-  customerId:number=null;
-  carId:number=null;
+  customerId:number;
+  carId:number;
   rentDate:Date;
   returnDate:Date;
   totalPrice:number;
@@ -35,12 +35,11 @@ export class CarDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params=>{
-        this.getCarById(params["carId"]);
-        this.getCarImagesByCar(params["carId"]);
         this.carId = params["carId"];
+        this.getCarById(this.carId);
+        this.getCarImagesByCar(this.carId);
+        this.getCustomers();
     }) 
-    
-    this.getCustomers();
   }
 
   getCarById(carId:number){
@@ -96,6 +95,7 @@ export class CarDetailComponent implements OnInit {
   checkFindexPoint(){
     this.rentalService.checkFindexPoint(this.carId,this.customerId).subscribe(
       response => {
+        this.createRental();
         this.toastrService.info("Ödeme sayfasına yönlendiriliyorsunuz...");
         this.router.navigate(['/card/',JSON.stringify(this.rental)]);
       },
@@ -119,17 +119,19 @@ export class CarDetailComponent implements OnInit {
   }
 
   rent(){
-    this.rental = {carId:Number(this.carId),
-                   customerId:Number(this.customerId),
-                   rentDate:this.rentDate,
-                   returnDate:this.returnDate};
-    
-    if(this.rental.carId == 0 || this.rental.customerId == 0 || this.rental.rentDate==undefined || this.rental.returnDate==undefined || this.carAvaliableSuccess == false){
+    if(this.carId == undefined || this.customerId == undefined || this.rentDate==undefined || this.returnDate==undefined || this.carAvaliableSuccess != true){
       this.toastrService.error("Bilgilerinizi eksiksiz ve doğru giriniz")
     }
     else{
       this.checkFindexPoint();
     }
+  }
+
+  createRental(){
+    this.rental = {carId:Number(this.carId),
+                   customerId:Number(this.customerId),
+                   rentDate:this.rentDate,
+                   returnDate:this.returnDate};
   }
 
 }
