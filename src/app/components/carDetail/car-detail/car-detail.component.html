@@ -4,7 +4,7 @@
           <div id="carouselExampleControls" class="carousel slide carousel-dark" data-bs-ride="carousel">
             <div class="carousel-inner">
               <div *ngFor="let carImage of carImages" [class]="getCurrentImageClass(carImage)">
-                 <img src="https://localhost:44334/{{carImage.carImagePath}}" class="d-block w-100" alt="https://localhost:44334/{{carImage.carImagePath}}">
+                 <img src="https://localhost:44334/{{carImage.carImagePath}}" class="d-block w-100" height="500" alt="https://localhost:44334/{{carImage.carImagePath}}">
               </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"  data-bs-slide="prev">
@@ -62,7 +62,7 @@
 <div *ngIf="carAvaliableSuccess==false" class="alert alert-danger">
   {{carAvaliableMessage}}
 </div>
-<br><br>
+<br>
 <div>
   <button class="btn btn-outline-dark float-end" routerLink="">Back</button>
   <button class="btn btn-primary float-end mx-1" (click)="rent()">Rent</button>
